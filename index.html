@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Portfolio</title>
+  <script src="https://kit.fontawesome.com/542ad5fee9.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0f19;
+      color: #eee;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a, button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top, #3b82f655, transparent 40%),
+        radial-gradient(circle at bottom right, #8b5cf655, transparent 40%);
+      z-index: -1;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: linear-gradient(to bottom, rgba(11, 15, 25, 0.9) 30%, rgba(11, 15, 25, 0));
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 90;
+      pointer-events: none;
+    }
+
+    nav {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 24px;
+      padding: 12px 28px;
+      z-index: 100;
+      max-width: 92vw;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+
+    nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    section {
+      min-height: 100vh;
+      min-height: 100svh;
+      padding: 120px 10%;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        gap: 16px;
+        padding: 10px 18px;
+        top: 10px;
+      }
+
+      section {
+        padding: 110px 6% 60px;
+      }
+
+      h1 {
+        font-size: 2.3rem;
+      }
+
+      .hero {
+        text-align: left;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      nav {
+        gap: 12px;
+        font-size: .9rem;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+      }
+    }
+
+    .accent {
+      color: #60a5fa;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 22px;
+      border-radius: 10px;
+      background: #2563eb;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, .06);
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 18px;
+      transition: .3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .skill {
+      margin: 14px 0;
+    }
+
+    .bar {
+      height: 8px;
+      background: #222;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: #141824;
+      color: #fff;
+      border: 1px solid #333;
+      border-radius: 10px;
+    }
+
+    button {
+      padding: 12px 22px;
+      border: none;
+      border-radius: 10px;
+      background: #2563eb;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .cert-card {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .3s, border-color .3s;
+    }
+
+    .cert-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(96, 165, 250, .4);
+    }
+
+    .pdf-container {
+      width: 100%;
+      height: 200px;
+      background: #141824;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+      overflow: hidden;
+    }
+
+    .pdf-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .pdf-container.no-inline-pdf iframe {
+      display: none;
+    }
+
+    .pdf-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      color: #60a5fa;
+      text-decoration: none;
+      background: linear-gradient(135deg, rgba(59,130,246,.12), rgba(139,92,246,.12));
+    }
+
+    .pdf-container.no-inline-pdf .pdf-fallback {
+      display: flex;
+    }
+
+    .pdf-fallback i {
+      font-size: 2rem;
+    }
+
+    .pdf-fallback span {
+      font-size: .85rem;
+      color: #aaa;
+    }
+
+    .cert-meta {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .cert-meta h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .cert-meta p {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+
+    .cert-view-btn {
+      margin-top: auto;
+      text-align: center;
+      padding: 10px;
+      background: rgba(37, 99, 235, .2);
+      color: #60a5fa;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 500;
+      transition: background .2s, color .2s;
+    }
+
+    .cert-view-btn:hover {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .about-sub {
+      margin-top: 70px;
+    }
+
+    .about-sub h3 {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      color: #fff;
+    }
+
+    .about-sub h3 .accent {
+      color: #60a5fa;
+    }
+
+    .timeline {
+      position: relative;
+      margin-top: 10px;
+      padding-left: 30px;
+    }
+
+    .timeline:before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 36px;
+      display: flex;
+      align-items: center;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -30px;
+      top: calc(50% - 18px);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #0b0f19;
+      border: 2px solid #60a5fa;
+      box-shadow: 0 0 0 4px rgba(96, 165, 250, .12);
+    }
+
+    .timeline-item:last-child .timeline-dot {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .timeline-card {
+      width: 100%;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 16px;
+      padding: 20px 24px;
+      transition: .3s;
+    }
+
+    .timeline-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(96, 165, 250, .4);
+    }
+
+    .timeline-date {
+      display: inline-block;
+      font-size: .8rem;
+      color: #60a5fa;
+      font-weight: bold;
+      letter-spacing: .03em;
+      margin-bottom: 6px;
+    }
+
+    .timeline-card h4 {
+      font-size: 1.05rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .timeline-card p {
+      color: #aaa;
+      font-size: .9rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    @media (min-width: 769px) {
+      .contact-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 16px;
+      padding: 18px 20px;
+      text-decoration: none;
+      color: #eee;
+      transition: .3s;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(96, 165, 250, .4);
+      background: rgba(255, 255, 255, .09);
+    }
+
+    .contact-icon {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(96, 165, 250, .15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #60a5fa;
+    }
+
+    .contact-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .contact-text .label {
+      display: block;
+      font-size: .95rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .contact-text .value {
+      display: block;
+      font-size: .8rem;
+      color: #aaa;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 10px;
+      color: #aaa;
+      border-top: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: #60a5fa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #2563eb;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#projects">Projects</a>
+  </nav>
+
+  <section id="home" class="hero">
+    <div>
+      <h1>Hello, I'm <span class="accent">Sean Simms</span></h1>
+      <p>Finance student with a passion for data analysis and technology.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About</h2>
+    <p>Replace this with your professional summary. Talk about your education, experience, interests, and career goals.</p>
+
+    <div class="about-sub">
+      <h3><span class="accent">01</span> Timeline</h3>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-date">2026 - Present</span>
+            <h4>Associate / TK Maxx Chatswood</h4>
+            <p>Short description</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-date">2026 — Present</span>
+            <h4>Barista / The Shed Castle Hill</h4>
+            <p>Short description</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card" style="border: 1px solid #2563eb; box-shadow: 0 0 12px rgba(37, 99, 235, 0.2);">
+            <span class="timeline-date">2025 — Present</span>
+            <h4>Bachelor of Applied Finance / Macquarie University</h4>
+            <p>Short description</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-date">2023 — 2025</span>
+            <h4>Manager / Lollipops Playland Kitchen and Café</h4>
+            <p>Short description</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-date">2019 — 2024</span>
+            <h4>High School / Crestwood High School</h4>
+            <p>Short description</p>
+          </div>
+        </div>
+
+      </div>
+
+      <h3 style="margin-top:70px"><span class="accent">02</span> Contact</h3>
+      <div class="contact-grid">
+
+        <a class="contact-card" href="mailto:sean.simms06@gmail.com">
+          <div class="contact-icon">
+            <i class="fa-regular fa-envelope" style="font-size: 20px;"></i>
+          </div>
+          <div class="contact-text">
+            <span class="label">Email</span>
+            <span class="value">sean.simms06@gmail.com</span>
+          </div>
+        </a>
+
+        <a class="contact-card" href="tel:+61410726285">
+          <div class="contact-icon">
+            <i class="fa-solid fa-phone" style="font-size: 20px;"></i>
+          </div>
+          <div class="contact-text">
+            <span class="label">Phone</span>
+            <span class="value">0410 726 285</span>
+          </div>
+        </a>
+
+        <a class="contact-card" href="https://www.linkedin.com/in/sean-simms-42b3b1353/" target="_blank">
+          <div class="contact-icon">
+            <i class="fa-brands fa-linkedin-in" style="font-size: 20px;"></i>
+          </div>
+          <div class="contact-text">
+            <span class="label">LinkedIn</span>
+            <span class="value">sean-simms</span>
+          </div>
+        </a>
+
+        <a class="contact-card" href="https://github.com/Sean-Simms" target="_blank">
+          <div class="contact-icon">
+            <i class="fa-brands fa-github" style="font-size: 20px;"></i>
+          </div>
+          <div class="contact-text">
+            <span class="label">GitHub</span>
+            <span class="value">github.com/Sean-Simms</span>
+          </div>
+        </a>
+
+        <a class="contact-card" href="files_other/Sean Simms.pdf" target="_blank">
+          <div class="contact-icon">
+            <i class="fa-regular fa-file-pdf" style="font-size: 20px;"></i>
+          </div>
+          <div class="contact-text">
+            <span class="label">Resume</span>
+            <span class="value">Open PDF</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <h2>Certifications</h2>
+    <div class="cert-grid">
+
+      <div class="cert-card">
+        <div class="pdf-container">
+          <iframe src="pdfs/AmplifyME High Potential Candidate - Sean Simms.pdf#toolbar=0&navpanes=0" type="application/pdf"></iframe>
+          <a href="pdfs/AmplifyME High Potential Candidate - Sean Simms.pdf" target="_blank" class="pdf-fallback">
+            <i class="fa-regular fa-file-pdf"></i>
+            <span>Tap to view PDF</span>
+          </a>
+        </div>
+        <div class="cert-meta">
+          <h3>High Potential Candidate</h3>
+          <p>AmplifyME • May 2026</p>
+          <a href="pdfs/AmplifyME High Potential Candidate - Sean Simms.pdf" target="_blank" class="cert-view-btn">Open Full PDF ↗</a>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="pdf-container">
+          <iframe src="pdfs/Pathways - Markets - Sean Simms.pdf#toolbar=0&navpanes=0" type="application/pdf"></iframe>
+          <a href="pdfs/Pathways - Markets - Sean Simms.pdf" target="_blank" class="pdf-fallback">
+            <i class="fa-regular fa-file-pdf"></i>
+            <span>Tap to view PDF</span>
+          </a>
+        </div>
+        <div class="cert-meta">
+          <h3>Markets Pathway</h3>
+          <p>AmplifyME • May 2026</p>
+          <a href="pdfs/Pathways - Markets - Sean Simms.pdf" target="_blank" class="cert-view-btn">Open Full PDF ↗</a>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="pdf-container">
+          <iframe src="pdfs/certificate-g9khzgzdctaj-1777186459.pdf#toolbar=0&navpanes=0" type="application/pdf"></iframe>
+          <a href="pdfs/certificate-g9khzgzdctaj-1777186459.pdf" target="_blank" class="pdf-fallback">
+            <i class="fa-regular fa-file-pdf"></i>
+            <span>Tap to view PDF</span>
+          </a>
+        </div>
+        <div class="cert-meta">
+          <h3>FactSet Essentials: Core Products</h3>
+          <p>FactSet • Apr 2026</p>
+          <a href="https://verify.skilljar.com/c/g9khzgzdctaj" target="_blank" class="cert-view-btn">Open Full Certificate ↗</a>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="pdf-container">
+          <iframe src="pdfs/Ethical Decision Making.pdf" type="application/pdf"></iframe>
+          <a href="pdfs/Ethical Decision Making.pdf" target="_blank" class="pdf-fallback">
+            <i class="fa-regular fa-file-pdf"></i>
+            <span>Tap to view PDF</span>
+          </a>
+        </div>
+        <div class="cert-meta">
+          <h3>Ethical Decision Making</h3>
+          <p>CFA Learning Lab • Mar 2026</p>
+          <a href="pdfs/Ethical Decision Making.pdf" target="_blank" class="cert-view-btn">Open Full PDF ↗</a>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="pdf-container">
+          <iframe src="pdfs/Interactions with Clients.pdf" type="application/pdf"></iframe>
+          <a href="pdfs/Interactions with Clients.pdf" target="_blank" class="pdf-fallback">
+            <i class="fa-regular fa-file-pdf"></i>
+            <span>Tap to view PDF</span>
+          </a>
+        </div>
+        <div class="cert-meta">
+          <h3>Interactions with Clients</h3>
+          <p>CFA Learning Lab • Mar 2026</p>
+          <a href="pdfs/Interactions with Clients.pdf" target="_blank" class="cert-view-btn">Open Full PDF ↗</a>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="pdf-container">
+          <iframe src="pdfs/Trading and Anylasis.pdf" type="application/pdf"></iframe>
+          <a href="pdfs/Trading and Anylasis.pdf" target="_blank" class="pdf-fallback">
+            <i class="fa-regular fa-file-pdf"></i>
+            <span>Tap to view PDF</span>
+          </a>
+        </div>
+        <div class="cert-meta">
+          <h3>Trading and Analysis</h3>
+          <p>CFA Learning Lab • Mar 2026</p>
+          <a href="pdfs/Trading and Anylasis.pdf" target="_blank" class="cert-view-btn">Open Full PDF ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Project One</h3>
+        <p>Coming soon.</p>
+      </div>
+      <div class="card">
+        <h3>Project Two</h3>
+        <p>Coming soon.</p>
+      </div>
+      <div class="card">
+        <h3>Project Three</h3>
+        <p>Coming soon.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+      </div>
+      <p>© 2026 Sean Simms</p>
+    </div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.animate(
+            [
+              { opacity: 0, transform: 'translateY(30px)' },
+              { opacity: 1, transform: 'translateY(0)' }
+            ],
+            { duration: 700, fill: 'forwards' }
+          );
+        }
+      });
+    }, { threshold: .15 });
+
+    document.querySelectorAll('section, .card, .cert-card').forEach(el => {
+      el.style.opacity = 0;
+      obs.observe(el);
+    });
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    if (isIOS) {
+      document.querySelectorAll('.pdf-container').forEach(el => {
+        el.classList.add('no-inline-pdf');
+      });
+    }
+  </script>
+
+</body>
+</html>
