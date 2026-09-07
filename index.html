@@ -491,6 +491,214 @@
       color: #2563eb;
       text-decoration: underline;
     }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      grid-column: 1 / -1;
+      padding: 40px;
+    }
+
+    .project-card h3 {
+      font-size: 1.6rem;
+    }
+
+    .project-tagline {
+      color: #aaa;
+      font-size: 1rem;
+      margin-top: 8px;
+      max-width: 640px;
+    }
+
+    .project-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 640px;
+    }
+
+    .project-stat {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .project-stat .label {
+      font-size: 0.75rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .project-stat .value {
+      font-size: 1.2rem;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .project-links .cert-view-btn {
+      flex: none;
+      padding: 12px 26px;
+      font-size: 1rem;
+    }
+
+    .project-github {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 8px;
+      color: #60a5fa;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: border-color .3s;
+      white-space: nowrap;
+    }
+
+    .project-github:hover {
+      border-color: rgba(96, 165, 250, .4);
+    }
+
+    @media (max-width: 480px) {
+      .project-card {
+        padding: 24px;
+      }
+
+      .project-stats {
+        grid-template-columns: 1fr 1fr;
+        max-width: none;
+      }
+
+      .project-links {
+        flex-direction: column;
+      }
+    }
+
+    .app-container {
+      width: 100%;
+      height: 600px;
+      background: #141824;
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .app-container {
+        height: 420px;
+      }
+    }
+
+    .app-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .app-iframe-wrap {
+      width: 133.33%;
+      height: 133.33%;
+      transform: scale(0.75);
+      transform-origin: top left;
+    }
+
+    .app-container.app-expanded .app-iframe-wrap {
+      width: 100%;
+      height: 100%;
+      transform: none;
+    }
+
+    .app-container.no-inline-app iframe {
+      display: none;
+    }
+
+    .app-expand-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 5;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      background: rgba(11, 15, 25, .7);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      transition: background .2s, border-color .2s;
+    }
+
+    .app-expand-btn:hover {
+      background: rgba(37, 99, 235, .6);
+      border-color: rgba(96, 165, 250, .5);
+    }
+
+    .app-container.no-inline-app .app-expand-btn {
+      display: none;
+    }
+
+    .app-container.app-expanded {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1000;
+      border-radius: 0;
+      border: none;
+    }
+
+    body.app-modal-open {
+      overflow: hidden;
+    }
+
+    .app-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      color: #60a5fa;
+      text-decoration: none;
+      background: linear-gradient(135deg, rgba(59, 130, 246, .12), rgba(139, 92, 246, .12));
+    }
+
+    .app-container.no-inline-app .app-fallback {
+      display: flex;
+    }
+
+    .app-fallback i {
+      font-size: 2rem;
+    }
+
+    .app-fallback span {
+      font-size: .85rem;
+      color: #aaa;
+    }
+
+    .app-note {
+      font-size: .8rem;
+      color: #aaa;
+      margin-top: 8px;
+    }
   </style>
 </head>
 <body>
@@ -721,17 +929,32 @@
   <section id="projects">
     <h2>Projects</h2>
     <div class="grid">
-      <div class="card">
-        <h3>Project One</h3>
-        <p>Coming soon.</p>
-      </div>
-      <div class="card">
-        <h3>Project Two</h3>
-        <p>Coming soon.</p>
-      </div>
-      <div class="card">
-        <h3>Project Three</h3>
-        <p>Coming soon.</p>
+      <div class="card project-card">
+        <div>
+          <h3>Monte Carlo Stock Price Simulator</h3>
+          <p class="project-tagline">Simulate potential future stock prices using real market data and Geometric Brownian Motion.</p>
+        </div>
+
+        <div class="app-container">
+          <button class="app-expand-btn" aria-label="Expand app preview">
+            <i class="fa-solid fa-expand"></i>
+          </button>
+          <div class="app-iframe-wrap">
+            <iframe src="https://real-time-monte-carlo-price-simulator.streamlit.app/?embed=true" title="Monte Carlo Stock Price Simulator preview" loading="lazy"></iframe>
+          </div>
+          <a href="https://real-time-monte-carlo-price-simulator.streamlit.app/" target="_blank" class="app-fallback">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>Tap to launch app</span>
+          </a>
+        </div>
+        <p class="app-note">Click the expand icon for a full-screen view, or "Launch App" below to open it in its own tab.</p>
+
+        <div class="project-links">
+          <a href="https://real-time-monte-carlo-price-simulator.streamlit.app/" target="_blank" class="cert-view-btn">Launch App ↗</a>
+          <a href="https://github.com/Sean-Simms/real-time-monte-carlo-price-simulator" target="_blank" class="project-github">
+            <i class="fa-brands fa-github"></i> Source
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -766,10 +989,57 @@
       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-      document.querySelectorAll('.pdf-container').forEach(el => {
-        el.classList.add('no-inline-pdf');
+      document.querySelectorAll('.pdf-container, .app-container').forEach(el => {
+        el.classList.add(el.classList.contains('app-container') ? 'no-inline-app' : 'no-inline-pdf');
       });
     }
+
+    function setExpandIcon(btn, expanded) {
+      btn.innerHTML = expanded
+        ? '<i class="fa-solid fa-compress"></i>'
+        : '<i class="fa-solid fa-expand"></i>';
+      btn.setAttribute('aria-label', expanded ? 'Collapse app preview' : 'Expand app preview');
+    }
+
+    // Reparenting to <body> on expand is required: .card:hover sets a CSS
+    // transform, and any transformed ancestor turns position:fixed children
+    // into being positioned relative to that ancestor instead of the
+    // viewport, which is what made the fullscreen view open off to the side.
+    const appPreviews = [];
+
+    document.querySelectorAll('.app-container').forEach(container => {
+      const btn = container.querySelector('.app-expand-btn');
+      if (!btn) return;
+
+      const placeholder = document.createComment('app-container-placeholder');
+      container.after(placeholder);
+      appPreviews.push({ container, placeholder, btn });
+
+      btn.addEventListener('click', () => toggleAppExpand(container));
+    });
+
+    function toggleAppExpand(container) {
+      const entry = appPreviews.find(p => p.container === container);
+      if (!entry) return;
+
+      const expanding = !container.classList.contains('app-expanded');
+
+      if (expanding) {
+        document.body.appendChild(container);
+      } else {
+        entry.placeholder.parentNode.insertBefore(container, entry.placeholder.nextSibling);
+      }
+
+      container.classList.toggle('app-expanded', expanding);
+      document.body.classList.toggle('app-modal-open', expanding);
+      setExpandIcon(entry.btn, expanding);
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.app-container.app-expanded').forEach(toggleAppExpand);
+      }
+    });
   </script>
 
 </body>
